@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>導予｜美式－傳統整復推拿</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1c1a17;
+      --warm: #a07850;
+      --mist: #f5f0e8;
+      --sand: #e8dece;
+      --light: #faf8f4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Serif TC', serif;
+      background: var(--light);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(250,248,244,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--sand);
+    }
+    .nav-logo {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 500;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--warm); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--warm); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 6rem 6rem;
+    }
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: var(--warm);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.2s forwards;
+    }
+    .hero-title {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 300;
+      line-height: 1.25;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+    .hero-title strong { font-weight: 600; color: var(--warm); display: block; }
+    .hero-desc {
+      font-size: 0.95rem;
+      line-height: 2;
+      color: #555;
+      max-width: 420px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-cta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .btn-primary {
+      padding: 0.9rem 2.2rem;
+      background: var(--warm);
+      color: #fff;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #8a6540; transform: translateY(-2px); }
+    .btn-outline {
+      padding: 0.9rem 2.2rem;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { background: var(--ink); color: #fff; transform: translateY(-2px); }
+
+    .hero-right {
+      background: var(--mist);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-art {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .circle-outer {
+      width: 420px; height: 420px;
+      border: 1px solid rgba(160,120,80,0.25);
+      border-radius: 50%;
+      position: absolute;
+      animation: rotate 30s linear infinite;
+    }
+    .circle-inner {
+      width: 280px; height: 280px;
+      border: 1px solid rgba(160,120,80,0.4);
+      border-radius: 50%;
+      position: absolute;
+      animation: rotate 20s linear infinite reverse;
+    }
+    .hero-kanji {
+      font-size: 9rem;
+      font-weight: 300;
+      color: rgba(160,120,80,0.15);
+      letter-spacing: -0.05em;
+      user-select: none;
+      position: relative;
+      z-index: 1;
+    }
+    .badge-stack {
+      position: absolute;
+      bottom: 3rem; right: 3rem;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .badge {
+      background: #fff;
+      border-left: 3px solid var(--warm);
+      padding: 0.7rem 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+      opacity: 0;
+      animation: fadeLeft 0.7s forwards;
+    }
+    .badge:nth-child(1) { animation-delay: 1s; }
+    .badge:nth-child(2) { animation-delay: 1.2s; }
+    .badge-label { color: var(--warm); font-size: 0.65rem; letter-spacing: 0.15em; }
+
+    /* ── ABOUT ── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 80vh;
+    }
+    .about-left {
+      background: var(--ink);
+      color: #fff;
+      padding: 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0.25em;
+      color: var(--warm);
+      margin-bottom: 2rem;
+    }
+    .about-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 300;
+      line-height: 1.4;
+      letter-spacing: 0.06em;
+      margin-bottom: 2rem;
+    }
+    .about-text {
+      font-size: 0.9rem;
+      line-height: 2.2;
+      color: rgba(255,255,255,0.7);
+      font-weight: 300;
+    }
+    .about-right {
+      background: var(--sand);
+      padding: 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .cert-item {
+      border-bottom: 1px solid rgba(28,26,23,0.12);
+      padding-bottom: 2rem;
+    }
+    .cert-item:last-child { border-bottom: none; }
+    .cert-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--warm);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .cert-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+    .cert-sub {
+      font-size: 0.8rem;
+      color: #777;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 8rem 6rem;
+      background: var(--light);
+    }
+    .services-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    .services-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      margin-top: 0.8rem;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .service-card {
+      background: var(--mist);
+      padding: 3.5rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--warm);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s;
+    }
+    .service-card:hover { background: #fff; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    .service-name {
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+    }
+    .service-desc {
+      font-size: 0.85rem;
+      line-height: 2;
+      color: #666;
+      font-weight: 300;
+    }
+
+    /* ── BOOKING ── */
+    .booking {
+      background: var(--ink);
+      color: #fff;
+      padding: 8rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .booking-left .section-label { color: var(--warm); }
+    .booking-title {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+    }
+    .booking-sub {
+      font-size: 0.9rem;
+      line-height: 2;
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+    }
+    .booking-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.8rem 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      text-decoration: none;
+      color: #fff;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .contact-item:hover {
+      border-color: var(--warm);
+      background: rgba(160,120,80,0.08);
+    }
+    .contact-icon {
+      font-size: 1.4rem;
+      min-width: 2rem;
+      text-align: center;
+    }
+    .contact-info .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--warm);
+      margin-bottom: 0.3rem;
+    }
+    .contact-info .value {
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      font-weight: 300;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 6rem;
+      background: #141210;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 6rem 2rem 3rem; }
+      .hero-right { min-height: 50vw; }
+      .circle-outer { width: 260px; height: 260px; }
+      .circle-inner { width: 170px; height: 170px; }
+      .hero-kanji { font-size: 6rem; }
+      .badge-stack { bottom: 1.5rem; right: 1.5rem; }
+      .about { grid-template-columns: 1fr; }
+      .about-left, .about-right { padding: 4rem 2rem; }
+      .services { padding: 5rem 2rem; }
+      .services-grid { grid-template-columns: 1fr; gap: 4px; }
+      .booking { grid-template-columns: 1fr; padding: 5rem 2rem; gap: 3rem; }
+      footer { flex-direction: column; gap: 0.5rem; padding: 2rem; text-align: center; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">導予<span>｜</span>整復推拿</a>
+    <ul class="nav-links">
+      <li><a href="#about">關於我</a></li>
+      <li><a href="#services">服務項目</a></li>
+      <li><a href="#booking">預約</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Traditional · Professional · Balanced</p>
+      <h1 class="hero-title">
+        找回身體的<br>
+        <strong>自然平衡</strong>
+      </h1>
+      <p class="hero-desc">
+        融合美式手法與傳統整復技術，<br>
+        以十年專業經驗，協助您疏解筋骨、消除疲勞，<br>
+        讓身體重回舒適與平衡的狀態。
+      </p>
+      <div class="hero-cta">
+        <a href="#booking" class="btn-primary">立即預約</a>
+        <a href="#services" class="btn-outline">了解服務</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-art">
+        <div class="circle-outer"></div>
+        <div class="circle-inner"></div>
+        <div class="hero-kanji">導</div>
+      </div>
+      <div class="badge-stack">
+        <div class="badge">
+          <div class="badge-label">CERTIFICATION</div>
+          國家傳統整復推拿證照
+        </div>
+        <div class="badge">
+          <div class="badge-label">NASM CERTIFIED</div>
+          美國國家運動醫學學院認證
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-left reveal">
+      <p class="section-label">About</p>
+      <h2 class="about-title">
+        十年淬鍊<br>
+        專注每一次調理
+      </h2>
+      <p class="about-text">
+        我深信，身體的不適往往源於長期積累的失衡。透過整合美式手法的精準與傳統整復的深度，每一次的調理都以恢復您的身體平衡為核心。<br><br>
+        無論是久坐帶來的肩頸緊繃、姿勢不良導致的腰臀疲倦，或是產後身體需要的細心調養，我都以十年的專業陪伴您每一步。
+      </p>
+    </div>
+    <div class="about-right reveal">
+      <div class="cert-item">
+        <div class="cert-num">10+</div>
+        <div class="cert-title">年專業調理經驗</div>
+        <div class="cert-sub">豐富實務，深度理解身體結構</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-num">國考</div>
+        <div class="cert-title">傳統整復推拿人員證照</div>
+        <div class="cert-sub">衛福部認可，專業有保障</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-num">NASM</div>
+        <div class="cert-title">美國國家運動醫學學院認證教練</div>
+        <div class="cert-sub">融合運動科學，全方位身體調理</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services-header reveal">
+      <p class="section-label" style="color:var(--warm);font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0.25em;">Services</p>
+      <h2 class="services-title">服務項目</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="service-icon">◎</span>
+        <h3 class="service-name">肩頸調理</h3>
+        <p class="service-desc">
+          針對長時間使用電腦、低頭族或工作壓力造成的肩頸緊繃與疲勞，透過專業手法協助肌肉放鬆、氣血疏通，讓肩頸重獲輕盈舒適。
+        </p>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">◎</span>
+        <h3 class="service-name">腰臀調理</h3>
+        <p class="service-desc">
+          久坐、久站或姿勢習慣引起的腰臀部緊繃與疲倦，藉由深層手法疏解積累的張力，協助恢復腰臀的舒適感與整體身體平衡。
+        </p>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">◎</span>
+        <h3 class="service-name">產後調理</h3>
+        <p class="service-desc">
+          專為產後媽媽設計，以溫和專業的手法協助身體各部位的恢復與平衡，舒緩孕育後的疲倦與緊繃，讓身體逐步回到舒適的狀態。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking" id="booking">
+    <div class="booking-left reveal">
+      <p class="section-label">Booking</p>
+      <h2 class="booking-title">預約調理<br>從今天開始</h2>
+      <p class="booking-sub">
+        歡迎透過電話或 LINE 與我聯繫，<br>
+        預約屬於您的專屬調理時段。<br><br>
+        我將依您的狀況，為您安排最合適的調理方式。
+      </p>
+    </div>
+    <div class="booking-right reveal">
+      <a href="tel:0915881577" class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div class="contact-info">
+          <div class="label">PHONE</div>
+          <div class="value">0915-881-577</div>
+        </div>
+      </a>
+      <a href="https://line.me/ti/p/@633kpnkg" target="_blank" class="contact-item">
+        <span class="contact-icon">💬</span>
+        <div class="contact-info">
+          <div class="label">LINE 官方帳號</div>
+          <div class="value">@633kpnkg</div>
+        </div>
+      </a>
+      <div class="contact-item" style="cursor:default;">
+        <span class="contact-icon">🕐</span>
+        <div class="contact-info">
+          <div class="label">預約方式</div>
+          <div class="value" style="font-size:0.88rem;">來電或加 LINE 均可預約</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 導予｜美式－傳統整復推拿</span>
+    <span>本服務以疏解筋骨、消除疲勞、促進身體平衡為目的</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
